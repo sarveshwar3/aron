@@ -1,0 +1,70 @@
+const express = require("express");
+const bodyParser = require("body-parser");
+
+const app = express();
+
+
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PATCH, DELETE, OPTIONS"
+  );
+  next();
+});
+
+// app.post("/api/posts", (req, res, next) => {
+//   const post = req.body;
+//   console.log(post);
+//   res.status(201).json({
+//     message: 'Post added successfully'
+//   });
+// });
+
+// app.get("/api/posts", (req, res, next) => {
+//   const posts = [
+//     {
+//       id: "fadf12421l",
+//       title: "First server-side post",
+//       content: "This is coming from the server"
+//     },
+//     {
+//       id: "ksajflaj132",
+//       title: "Second server-side post",
+//       content: "This is coming from the server!"
+//     }
+//   ];
+//   res.status(200).json({
+//     message: "Posts fetched successfully!",
+//     posts: posts
+//   });
+// });
+
+
+var mysql = require('mysql')
+var connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : '',
+  database : 'ARON'
+});
+
+var jsons = {};
+connection.connect()
+connection.query('SELECT * from Product', function (err, rows, fields) {
+    if (err) throw err
+    jsons = rows;
+    console.log('The solution is: ', rows[0]);
+  })
+  
+  connection.end();
+
+  app.use("/api/data", (req,res,next)=>{
+     res.send(jsons);
+  });
+
+module.exports = app;
