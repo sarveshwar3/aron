@@ -1,0 +1,39 @@
+  
+<a [routerLink]="['/product']">adds products</a>
+
+<div>
+  <table>
+    <tr>
+    <th>fixture id</th>
+    <th>fixture name</th>
+    <th>fixture cost</th>
+     </tr>
+     <tr *ngFor="let item of storeproduct">
+       <td>{{item.id}}</td>
+       <td>{{item.fixture_name}}</td>
+       <td>{{item.fixture_cost}}</td>
+       <td (click) = "deleteproduct(item.id)">Delete</td>
+     </tr>
+  </table>
+
+</div>
+<br><br>
+<h1>fixture parts form</h1>
+<form #userlogin = "ngForm" (ngSubmit) = "onClickSubmit(userlogin)" >
+    <label>list of fixtures available</label>
+    <select name="fixavail"
+    ngModel #fixavail="ngModel">
+      <option selected>select</option>
+      <option *ngFor="let item of storeproduct" >{{item.id}}</option>
+    </select>
+    <label>List of parts available</label>
+    <select  name="partavail" ngModel
+    #partavail="ngModel">
+      <option selected>select</option>
+      <option  *ngFor="let item of storeproducts">{{item.ProductID}}</option>
+    </select>
+    <input type = "text" name = "quantity" placeholder = "quantity" ngModel #quantity="ngModel">
+    
+    <input type = "submit" value = "submit">
+  </form>
+  

@@ -1,0 +1,46 @@
+  
+<a [routerLink]="['/product']">adds products</a>
+
+<div>
+  <table>
+    <tr>
+    <th>productid</th>
+    <th>part_name</th>
+    <th>part_description</th>
+    <th>part_vendor</th>
+    <th>part_cost</th>
+    <th>part_quant</th>
+     </tr>
+     <tr *ngFor="let item of storeproduct">
+       <td>{{item.ProductID}}</td>
+       <td>{{item.part_name}}</td>
+       <td>{{item.part_description}}</td>
+       <td>{{item.part_vendor}}</td>
+       <td>{{item.part_cost}}</td>
+       <td>{{item.part_quant}}</td>
+       <td (click) = "deleteproduct(item.ProductID)">Delete</td>
+     </tr>
+  </table>
+
+</div>
+
+<form #userlogin = "ngForm" (ngSubmit) = "onClickSubmit(userlogin)" >
+  <input type = "text" name = "name" placeholder = "name" ngModel #name="ngModel">
+  <br/>
+  <input type = "text" name = "description" placeholder = "description" ngModel #description="ngModel">
+  <br/>
+  <input type="text" name="vendor" placeholder="vendor" ngModel #vendor="ngModel">
+  <br>
+  <input type="text" name="cost" placeholder="cost" ngModel #cost="ngModel">
+  <br>
+  <input type="text" name="quantity" placeholder="quantity" ngModel #quantity="ngModel">
+  <input type = "submit" value = "submit">
+</form>
+
+  <!-- the following code has been replace by the above code -->
+  <!-- <span *ngFor="let item of storeproduct">{{item.ProductID}}</span>
+  <span *ngFor="let item of storeproduct">{{item.part_name}}</span>
+  <span *ngFor="let item of storeproduct">{{item.part_description}}</span>
+  <span *ngFor="let item of storeproduct">{{item.part_vendor}}</span>
+  <span *ngFor="let item of storeproduct">{{item.part_cost}}</span>
+  <span *ngFor="let item of storeproduct">{{item.part_quant}}</span> -->

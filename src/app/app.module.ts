@@ -45,11 +45,18 @@ import {productservice} from '../app/product.service';
       MatTreeModule,
     } from '@angular/material';
 import { ProductaddComponent } from './productadd/productadd.component';
+import { ProducttableComponent } from './producttable/producttable.component';
+import { FixturetableComponent } from './fixturetable/fixturetable.component';
+import { PurchaseComponent } from './purchase/purchase.component';
+
 
 @NgModule({ 
   declarations: [
     AppComponent,
-    ProductaddComponent
+    ProductaddComponent,
+    ProducttableComponent,
+    FixturetableComponent,
+    PurchaseComponent
   ],
   imports: [ 
     BrowserModule, 
@@ -96,7 +103,10 @@ import { ProductaddComponent } from './productadd/productadd.component';
     MatTooltipModule,
     MatTreeModule,
     RouterModule.forRoot([
-      {path:"product",component:ProductaddComponent}
+      {path:"product",component:ProductaddComponent},
+      {path:"", component:ProducttableComponent},
+      {path:"fixture",component:FixturetableComponent},
+      {path:"purchaseparts",component:PurchaseComponent}
     ])
     
   ],
