@@ -1,8 +1,11 @@
 const express = require("express");
-const bodyParser = require("body-parser");
+
 
 const app = express();
+const bodyParser = require("body-parser");
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -54,17 +57,68 @@ var connection = mysql.createConnection({
 });
 
 var jsons = {};
-connection.connect()
+var js = {};
+var jsfix = {};
+
 connection.query('SELECT * from Product', function (err, rows, fields) {
     if (err) throw err
     jsons = rows;
-    console.log('The solution is: ', rows[0]);
-  })
-  
-  connection.end();
-
-  app.use("/api/data", (req,res,next)=>{
-     res.send(jsons);
+    console.log('The solution is: ', rows);
+    
+  js = JSON.stringify(rows);
+  console.log("---------------");
+  console.log(js);
   });
+
+ 
+
+  connection.query('SELECT * from Fixtures', function (err, rows, fields) {
+    if (err) throw err
+    
+    console.log('The solution is: ', rows);
+    
+  jsfix = JSON.stringify(rows);
+  console.log("---------------");
+  console.log(jsfix);
+  });
+
+  //connection for insert into database
+  
+ // INSERT INTO `Fixtures`(`id`, `fixture_name`, `fixture_cost`) VALUES ([value-1],[value-2],[value-3])
+   
+
+   app.post("/api/fix",(req,res,next)=>{
+     const productsave = req.body;
+     console.log(productsave.id);
+     let stmt = "INSERT INTO `Fixtures`(`id`, `fixture_name`, `fixture_cost`) VALUES (?,?,?)";
+     let gotvalues = [productsave.id,productsave.fixture_name,productsave.fixture_cost];
+   
+     connection.query(stmt,gotvalues, function (err, rows, fields) {
+      if (err) throw err
+      
+      console.log('The solution is: ', rows);
+    });
+     console.log(gotvalues);
+  
+    
+   // console.log('The solution is: ', rows);
+    
+ 
+     res.status(201).json({
+       message:"product added successfully"
+     });
+
+   });
+
+   app.get("/api/fix",(req,res,next)=>{
+      res.send(jsfix);
+      console.log(jsfix);
+   });
+
+  app.get("/api/data", (req,res,next)=>{
+     //sends the json data to the front end whenever this url is called
+     res.send(js);
+  });
+
 
 module.exports = app;
